@@ -1,5 +1,5 @@
 import unittest
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player import Player
 
 
@@ -45,3 +45,19 @@ class TestStatisticsService(unittest.TestCase):
         self.assertAlmostEqual(str(top[0]), "Gretzky EDM 35 + 89 = 124")
         self.assertAlmostEqual(str(top[1]), "Lemieux PIT 45 + 54 = 99")
         self.assertAlmostEqual(str(top[2]), "Yzerman DET 42 + 56 = 98")
+
+    def test_top_pelaajat_goals(self):
+        top = self.stats.top(3, SortBy.GOALS)
+
+        self.assertAlmostEqual(len(top), 3)
+        self.assertAlmostEqual(str(top[0]), "Lemieux PIT 45 + 54 = 99")
+        self.assertAlmostEqual(str(top[1]), "Yzerman DET 42 + 56 = 98")
+        self.assertAlmostEqual(str(top[2]), "Kurri EDM 37 + 53 = 90")
+
+    def test_top_pelaajat_assists(self):
+        top = self.stats.top(3, SortBy.ASSISTS)
+
+        self.assertAlmostEqual(len(top), 3)
+        self.assertAlmostEqual(str(top[0]), "Gretzky EDM 35 + 89 = 124")
+        self.assertAlmostEqual(str(top[1]), "Yzerman DET 42 + 56 = 98")
+        self.assertAlmostEqual(str(top[2]), "Lemieux PIT 45 + 54 = 99")
