@@ -7,9 +7,13 @@ class Player:
         self.team = dict['team']
         self.games = dict['games']
         self.id = dict['id']
+
+    @property
+    def points(self):
+        return self.goals + self.assists
     
     def __str__(self):
         return (
-            f"{self.name} team {self.team} goals {self.goals} "
-            f"assists {self.assists}"
+            f"{self.name:20} {self.team:4} {self.goals:2} + {self.assists:2}"
+            f" = {self.points}"
         )

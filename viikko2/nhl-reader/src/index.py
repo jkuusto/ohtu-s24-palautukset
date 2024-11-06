@@ -16,11 +16,15 @@ def main():
 
     nationality = "FIN"
 
+    players_nationality = filter(lambda player: player.nationality ==
+                                 nationality, players)
+    players_points = sorted(players_nationality, key=lambda player:
+                            player.points, reverse=True)
+
     print(f"Players from {nationality}:\n")
 
-    for player in players:
-        if player.nationality == nationality:
-            print(player)
+    for player in players_points:
+        print(player)
 
 if __name__ == "__main__":
     main()
