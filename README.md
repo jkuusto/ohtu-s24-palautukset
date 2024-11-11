@@ -1,4 +1,4 @@
 # ohtu-s24-palautukset
 https://github.com/jkuusto/ohtuvarasto
 
-https://github.com/jkuusto/webcounter
+https://github.com/jkuusto/webcntr
