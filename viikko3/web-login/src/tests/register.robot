@@ -48,13 +48,36 @@ Register With Username That Is Already In Use
     Set Password Confirmation  kalle123
     Submit Credentials
     Go To Main Page
-    Click Button  Logout
+    Submit Logout
     Go To Register Page
     Set Username  kalle
     Set Password  kalle123
     Set Password Confirmation  kalle123
     Submit Credentials
     Registration Should Fail With Message  User with username kalle already exists
+
+Login After Successful Registration
+    Set Username  jarkko
+    Set Password  jarkko123
+    Set Password Confirmation  jarkko123
+    Submit Credentials
+    Go To Main Page
+    Submit Logout
+    Set Username  jarkko
+    Set Password  jarkko123
+    Submit Login
+    Login Should Succeed
+
+Login After Failed Registration
+    Set Username  ja
+    Set Password  jarkko123
+    Set Password Confirmation  jarkko123
+    Submit Credentials
+    Go To Login Page
+    Set Username  ja
+    Set Password  jarkko123
+    Submit Login
+    Login Should Fail With Message  Invalid username or password
 
 *** Keywords ***
 Registration Should Succeed
@@ -65,8 +88,22 @@ Registration Should Fail With Message
     Register Page Should Be Open
     Page Should Contain  ${message}
 
+Login Should Succeed
+    Main Page Should Be Open
+
+Login Should Fail With Message
+    [Arguments]  ${message}
+    Login Page Should Be Open
+    Page Should Contain  ${message}
+
 Submit Credentials
     Click Button  Register
+
+Submit Login
+    Click Button  Login
+
+Submit Logout
+    Click Button  Logout
 
 Set Username
     [Arguments]  ${username}
