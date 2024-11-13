@@ -8,6 +8,7 @@ ${DELAY}         0.5 seconds
 ${HOME_URL}      http://${SERVER}
 ${LOGIN_URL}     http://${SERVER}/login
 ${REGISTER_URL}  http://${SERVER}/register
+${MAIN_URL}      http://${SERVER}/ohtu
 ${BROWSER}       chrome
 ${HEADLESS}      false
 
@@ -32,11 +33,20 @@ Login Page Should Be Open
 Main Page Should Be Open
     Title Should Be  Ohtu Application main page
 
+Welcome Page Should Be Open
+    Title Should Be  Welcome to Ohtu Application!
+
 Go To Login Page
     Go To  ${LOGIN_URL}
 
 Go To Starting Page
     Go To  ${HOME_URL}
+
+Go To Register Page
+    Go To  ${REGISTER_URL}
+
+Go To Main Page
+    Go To  ${MAIN_URL}
 
 Register Page Should Be Open
     Title Should Be  Register
