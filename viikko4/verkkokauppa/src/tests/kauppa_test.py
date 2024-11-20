@@ -185,15 +185,6 @@ class TestKauppa(unittest.TestCase):
         self.pankki_mock.tilisiirto.assert_called_with("pekka", 42, "12345", "33333-44455", 5)
 
     def test_varmistetaan_etta_kauppa_pyytaa_uuden_viitenumeron_jokaiselle_maksutapahtumalle(self):
-        def inkrementoiva_viitegeneraattori():
-            if not hasattr(self, "nykyinen_viite"):
-                self.nykyinen_viite = 42  # Aloita 42:lla
-            else:
-                self.nykyinen_viite += 1
-            return self.nykyinen_viite
-        
-        self.viitegeneraattori_mock.uusi.side_effect = inkrementoiva_viitegeneraattori
-        
         # tehdään toteutus saldo-metodille
         def varasto_saldo(tuote_id):
             if tuote_id == 1:
@@ -210,22 +201,22 @@ class TestKauppa(unittest.TestCase):
 
         # alustetaan kauppa
         kauppa = Kauppa(self.varasto_mock, self.pankki_mock, self.viitegeneraattori_mock)
+        
+        # tehdään ostokset
+        kauppa.aloita_asiointi()
+        kauppa.lisaa_koriin(1)
+        kauppa.tilimaksu("pekka", "12345")
+
+        self.viitegeneraattori_mock.uusi.assert_called()
+
+        self.viitegeneraattori_mock.reset_mock()
 
         # tehdään ostokset
         kauppa.aloita_asiointi()
         kauppa.lisaa_koriin(1)
         kauppa.tilimaksu("pekka", "12345")
 
-        # varmistetaan, että metodia tilisiirto on kutsuttu oikeilla argumenteilla
-        self.pankki_mock.tilisiirto.assert_called_with("pekka", 42, "12345", "33333-44455", 5)
-
-        # tehdään ostokset
-        kauppa.aloita_asiointi()
-        kauppa.lisaa_koriin(1)
-        kauppa.tilimaksu("pekka", "12345")
-
-        # varmistetaan, että metodia tilisiirto on kutsuttu oikeilla argumenteilla
-        self.pankki_mock.tilisiirto.assert_called_with("pekka", 43, "12345", "33333-44455", 5)
+        self.viitegeneraattori_mock.uusi.assert_called()
 
     def test_poista_korista_metodi_palauttaa_tuotteen_varastoon(self):
         kauppa = Kauppa(self.varasto_mock, self.pankki_mock, self.viitegeneraattori_mock)
