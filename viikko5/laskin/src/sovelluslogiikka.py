@@ -3,19 +3,26 @@ class Sovelluslogiikka:
         self._arvo = arvo
 
     def miinus(self, operandi):
+        self._previous_arvo = self._arvo
         self._arvo = self._arvo - operandi
 
     def plus(self, operandi):
+        self._previous_arvo = self._arvo
         self._arvo = self._arvo + operandi
 
     def nollaa(self):
+        self._previous_arvo = self._arvo
         self._arvo = 0
 
     def aseta_arvo(self, arvo):
+        self._previous_arvo = self._arvo
         self._arvo = arvo
 
     def arvo(self):
         return self._arvo
+    
+    def kumoa(self):
+        self._arvo = self._previous_arvo
 
 class Summa:
     def __init__(self, sovelluslogiikka, lue_syote):
@@ -55,4 +62,4 @@ class Kumoa:
         self._lue_syote = lue_syote
 
     def suorita(self):
-        pass
+        self._sovelluslogiikka.kumoa()
